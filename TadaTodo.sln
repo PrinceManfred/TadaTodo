@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TadaTodo.Server", "TadaTodo.Server\TadaTodo.Server.csproj", "{B0A21254-81EA-4C85-8E99-8C5B10A5B838}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "TadaTodo.Client", "TadaTodo.Client\TadaTodo.Client.esproj", "{B7473777-2B33-453E-9E26-B330EA470846}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0A21254-81EA-4C85-8E99-8C5B10A5B838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0A21254-81EA-4C85-8E99-8C5B10A5B838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0A21254-81EA-4C85-8E99-8C5B10A5B838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0A21254-81EA-4C85-8E99-8C5B10A5B838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7473777-2B33-453E-9E26-B330EA470846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7473777-2B33-453E-9E26-B330EA470846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7473777-2B33-453E-9E26-B330EA470846}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7473777-2B33-453E-9E26-B330EA470846}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+EndGlobal
