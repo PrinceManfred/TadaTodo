@@ -63,7 +63,7 @@
                 <p>{{ error }}</p>
               </v-col>
               <v-col cols="12" class="text-right">
-                <p>Don't have an account? <router-link to="/">Register</router-link></p>
+                <p>Already have an account? <router-link to="/login">Login</router-link></p>
               </v-col>
             </v-row>
           </v-card-text>

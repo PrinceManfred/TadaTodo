@@ -47,7 +47,7 @@
                 <p>Invalid username or password.</p>
               </v-col>
               <v-col cols="12" class="text-right">
-                <p>Don't have an account? <router-link to="/">Register</router-link></p>
+                <p>Don't have an account? <router-link to="/register">Register</router-link></p>
               </v-col>
             </v-row>
           </v-card-text>
