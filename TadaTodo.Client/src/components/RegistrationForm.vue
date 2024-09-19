@@ -31,12 +31,14 @@
                     name="passwordOne"
                     counter
                     persistent-counter
+                    @input="passwordOneChanged"
                     @click:append-inner="showPassword = !showPassword"
                     :rules="[minimumLength(6)]"
                     class="my-2"
                   />
                   <v-text-field
                     v-model="passwordTwo"
+                    ref="passwordTwoRef"
                     label="Reenter Password"
                     prepend-icon="mdi-lock"
                     :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -45,7 +47,7 @@
                     counter
                     persistent-counter
                     @click:append-inner="showPassword = !showPassword"
-                    :rules="[minimumLength(6), matchPasswords]"
+                    :rules="[matchPasswords, minimumLength(6)]"
                     class="my-2"
                   />
                   <v-btn
@@ -74,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, reactive, ref } from 'vue';
+import { inject, reactive, ref, useTemplateRef } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
 import { type LoadingState, LoadingSymbol } from '@/plugins/loading';
@@ -86,6 +88,8 @@ const userStore = useUserStore();
 const username = ref('');
 const passwordOne = ref('');
 const passwordTwo = ref('');
+const passwordTwoRef = useTemplateRef('passwordTwoRef');
+
 const error = ref<string | null>(null);
 
 const showPassword = ref(false);
@@ -139,5 +143,9 @@ function matchPasswords(value: string) {
     return 'Passwords must match.';
   }
   return true;
+}
+
+function passwordOneChanged() {
+  passwordTwoRef.value?.validate();
 }
 </script>
