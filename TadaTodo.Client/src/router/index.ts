@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '@/pages/HomePage';
-import LoginPage from '@/pages/LoginPage';
+import HomePage from '@/pages/HomePage.vue';
+import LoginPage from '@/pages/LoginPage.vue';
 import { useUserStore } from '@/stores/user';
+import RegistrationPage from '@/pages/RegistrationPage.vue';
+import NotFoundPage from '@/pages/NotFoundPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,9 +17,23 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginPage,
+      props: (route) => ({ errorMessage: route.query.errorMessage }),
       beforeEnter: () => {
         if (useUserStore().isLoggedIn) return { path: '/' };
       }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegistrationPage,
+      beforeEnter: () => {
+        if (useUserStore().isLoggedIn) return { path: '/' };
+      }
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'notFound',
+      component: NotFoundPage
     }
   ]
 });

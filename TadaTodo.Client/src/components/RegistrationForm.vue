@@ -17,19 +17,35 @@
                     v-model="username"
                     label="Username"
                     prepend-icon="mdi-account"
-                    :rules="[required]"
+                    counter
+                    persistent-counter
+                    :rules="[usernameCharacters, lengthBetween(3, 50)]"
                     class="my-2"
                   />
                   <v-text-field
-                    v-model="password"
+                    v-model="passwordOne"
                     label="Password"
                     prepend-icon="mdi-lock"
                     :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="showPassword ? 'text' : 'password'"
-                    name="password"
+                    name="passwordOne"
                     counter
+                    persistent-counter
                     @click:append-inner="showPassword = !showPassword"
-                    :rules="[required]"
+                    :rules="[minimumLength(6)]"
+                    class="my-2"
+                  />
+                  <v-text-field
+                    v-model="passwordTwo"
+                    label="Reenter Password"
+                    prepend-icon="mdi-lock"
+                    :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="showPassword ? 'text' : 'password'"
+                    name="passwordTwo"
+                    counter
+                    persistent-counter
+                    @click:append-inner="showPassword = !showPassword"
+                    :rules="[minimumLength(6), matchPasswords]"
                     class="my-2"
                   />
                   <v-btn
@@ -44,7 +60,7 @@
                 </v-form>
               </v-col>
               <v-col v-if="error" class="text-error">
-                <p>Invalid username or password.</p>
+                <p>{{ error }}</p>
               </v-col>
               <v-col cols="12" class="text-right">
                 <p>Don't have an account? <router-link to="/">Register</router-link></p>
@@ -68,8 +84,9 @@ const { startLoading, stopLoading } = inject(LoadingSymbol) as LoadingState;
 const router = useRouter();
 const userStore = useUserStore();
 const username = ref('');
-const password = ref('');
-const error = ref(false);
+const passwordOne = ref('');
+const passwordTwo = ref('');
+const error = ref<string | null>(null);
 
 const showPassword = ref(false);
 const isValid = ref<boolean | null>(null);
@@ -82,21 +99,45 @@ async function login() {
   }
   try {
     startLoading();
-    await userStore.login(username.value, password.value);
+    await userStore.register(username.value, passwordOne.value);
     router.push('/');
-  } catch {
-    error.value = true;
+  } catch (e: any) {
+    error.value = e as string;
     shaker.shake();
   } finally {
     stopLoading();
   }
 }
 
-function required(value: string) {
-  if (!value || value.trim().length === 0) {
-    return "Can't be empty.";
-  }
+function lengthBetween(min: number, max: number) {
+  return (value: string) => {
+    if (!value || value.length < min || value.length > max)
+      return `Must be between ${min} and ${max} characters long.`;
 
+    return true;
+  };
+}
+
+function minimumLength(min: number) {
+  return (value: string) => {
+    if (!value || value.length < min) return `Must be at least ${min} characters long.`;
+
+    return true;
+  };
+}
+
+function usernameCharacters(value: string) {
+  const regex = /^[a-zA-Z0-9-_]*$/;
+  if (!value.match(regex)) {
+    return 'Can only contain alphanumeric characters, dashes (-), and underscores (_).';
+  }
+  return true;
+}
+
+function matchPasswords(value: string) {
+  if (value !== passwordOne.value) {
+    return 'Passwords must match.';
+  }
   return true;
 }
 </script>

@@ -7,7 +7,7 @@ export const useUserStore = defineStore('user', {
     username: null
   }),
   getters: {
-    isLoggedIn() {
+    isLoggedIn(): boolean {
       return this.id > 0;
     }
   },
@@ -25,6 +25,19 @@ export const useUserStore = defineStore('user', {
         throw new Error('Failed to login');
       }
     },
+    async register(username: string, password: string) {
+      try {
+        const res = await axios.post('/api/users', {
+          username,
+          password
+        });
+
+        this.id = res.data.id;
+        this.username = res.data.username;
+      } catch (error: any) {
+        throw error?.response?.data ?? 'Failed to register.';
+      }
+    },
     async checkLoginStatus() {
       try {
         const res = await axios.get('/api/users/me');
@@ -37,10 +50,10 @@ export const useUserStore = defineStore('user', {
     },
     async logout() {
       try {
-        const res = await axios.get('/api/users/logout');
+        await axios.get('/api/users/logout');
         this.$reset();
       } catch {
-        throw new Error('Failed to login');
+        throw new Error('Failed to logout');
       }
     }
   }
