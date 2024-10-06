@@ -1,11 +1,42 @@
 <template>
   <v-app>
     <v-app-bar scroll-behavior="elevate" color="primary" app>
-      <template v-slot:prepend>
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <template v-if="userStore.isLoggedIn && display.xs.value" v-slot:extension>
+        <v-text-field
+          v-model="searchQuery"
+          label="Search"
+          single-line
+          append-inner-icon="mdi-magnify"
+          @click:append-inner="performSearch"
+          @keyup.enter="performSearch"
+          hide-details
+          variant="solo"
+        />
       </template>
-      <v-app-bar-title text="TadaTodo" />
+
+      <v-app-bar-title
+        @click="router.push('/')"
+        text="TadaTodo"
+        class="flex-0-0"
+        style="cursor: pointer"
+      />
+
       <v-spacer />
+
+      <v-text-field
+        v-if="userStore.isLoggedIn && !display.xs.value"
+        v-model="searchQuery"
+        label="Search"
+        single-line
+        append-inner-icon="mdi-magnify"
+        @click:append-inner="performSearch"
+        @keyup.enter="performSearch"
+        hide-details
+        max-width="300px"
+        variant="solo"
+        density="compact"
+      />
+
       <v-btn v-if="!userStore.isLoggedIn" size="small" to="/login" prepend-icon="mdi-login"
         >Login</v-btn
       >
@@ -26,11 +57,6 @@
         </v-list>
       </v-menu>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer">
-      <v-list>
-        <v-list-item title="Navigation drawer"></v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-main>
       <router-view />
     </v-main>
@@ -42,21 +68,25 @@
 
 <script lang="ts" setup>
 import { inject, ref } from 'vue';
-import { useDisplay } from 'vuetify';
 import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
 import { type LoadingState, LoadingSymbol } from '@/plugins/loading';
+import { useDisplay } from 'vuetify';
 
 const { isLoading, startLoading, stopLoading } = inject(LoadingSymbol) as LoadingState;
 const router = useRouter();
-const display = useDisplay();
-const drawer = ref(!display.mobile.value);
 const userStore = useUserStore();
+const display = useDisplay();
+const searchQuery = ref('');
 
 async function logout() {
   startLoading();
   await userStore.logout();
   stopLoading();
   router.push('/');
+}
+
+async function performSearch() {
+  router.push({ path: '/search', query: { search: searchQuery.value } });
 }
 </script>

@@ -1,6 +1,18 @@
 <template>
   <main>
-    <AllLists />
+    <v-container class="fill-height" max-width="1200px">
+      <v-row>
+        <v-col cols="12">
+          <h1>My Todo Lists</h1>
+        </v-col>
+        <v-col cols="12">
+          <v-btn color="secondary" text="New List" prepend-icon="mdi-plus" />
+        </v-col>
+        <v-col cols="12">
+          <AllLists />
+        </v-col>
+      </v-row>
+    </v-container>
   </main>
 </template>
 

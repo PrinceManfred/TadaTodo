@@ -5,6 +5,7 @@ import { useUserStore } from '@/stores/user';
 import RegistrationPage from '@/pages/RegistrationPage.vue';
 import NotFoundPage from '@/pages/NotFoundPage.vue';
 import TodosPage from '@/pages/TodosPage.vue';
+import SearchPage from '@/pages/SearchPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,7 +13,10 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomePage
+      component: HomePage,
+      beforeEnter: () => {
+        if (useUserStore().isLoggedIn) return { path: '/todos' };
+      }
     },
     {
       path: '/login',
@@ -20,7 +24,7 @@ const router = createRouter({
       component: LoginPage,
       props: (route) => ({ errorMessage: route.query.errorMessage }),
       beforeEnter: () => {
-        if (useUserStore().isLoggedIn) return { path: '/' };
+        if (useUserStore().isLoggedIn) return { path: '/todos' };
       }
     },
     {
@@ -28,7 +32,7 @@ const router = createRouter({
       name: 'register',
       component: RegistrationPage,
       beforeEnter: () => {
-        if (useUserStore().isLoggedIn) return { path: '/' };
+        if (useUserStore().isLoggedIn) return { path: '/todos' };
       }
     },
     {
@@ -38,6 +42,15 @@ const router = createRouter({
       beforeEnter: () => {
         if (!useUserStore().isLoggedIn) return { path: '/login' };
       }
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: SearchPage,
+      beforeEnter: () => {
+        if (!useUserStore().isLoggedIn) return { path: '/login' };
+      },
+      props: (route) => ({ search: route.query.search ?? '' })
     },
     {
       path: '/:catchAll(.*)',
