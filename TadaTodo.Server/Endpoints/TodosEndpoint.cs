@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TadaTodo.Server.Helpers;
 using TadaTodo.Server.Data;
@@ -31,25 +32,37 @@ public static class TodosEndpoint
 
         group.MapPatch("{id:int}", UpdateTodoList)
             .WithName("UpdateTodoList");
-        
-        group.MapGet("{search}", FindTodoLists)
-            .WithName("FindTodoLists");
     }
 
-    private static async Task<Results<Ok<List<TodoList>>, NotFound>> GetAllTodoLists(HttpContext httpContext,
+    private static async Task<Results<Ok<List<TodoList>>, BadRequest>> GetAllTodoLists([FromQuery] string? search, HttpContext httpContext,
         TadaTodoContext context)
     {
-        var id = httpContext.User.GetUserId();
-        var user = await context.Users
-            .Include(u => u.TodoLists)
-            .ThenInclude(tl => tl.TodoItems)
-            .AsNoTracking()
-            .Where(u => u.Id == id)
-            .FirstOrDefaultAsync();
+        var userId = httpContext.User.GetUserId();
+        IQueryable<User> userQuery;
+        if (search is null)
+        {
+            userQuery = context.Users
+                .Include(u => u.TodoLists)
+                .ThenInclude(tl => tl.TodoItems)
+                .AsNoTracking()
+                .Where(u => u.Id == userId);
+        }
+        else
+        {
+            userQuery = context.Users
+                .AsNoTracking()
+                .Include(u => u.TodoLists)
+                // ReSharper disable once EntityFramework.ClientSideDbFunctionCall - incorrectly flagging the `Like` method as not in a DB query
+                .ThenInclude(tl => tl.TodoItems.Where(ti => EF.Functions.Like(ti.Value, $"%{search}%")))
+                .Where(u => u.Id == userId);
+        }
+        
+        var user = await userQuery.FirstOrDefaultAsync();
 
-        if (user is null) return TypedResults.NotFound();
+        if (user is null) return TypedResults.BadRequest();
 
-        return TypedResults.Ok(user.TodoLists);
+        var todoLists = search is null ? user.TodoLists : user.TodoLists.Where(tl => tl.TodoItems.Count > 0).ToList();
+        return TypedResults.Ok(todoLists);
     }
 
     private static async Task<Results<Ok<TodoList>, NotFound, BadRequest>> GetTodoList(int id, HttpContext httpContext,
@@ -104,8 +117,8 @@ public static class TodosEndpoint
 
         var todoList = new TodoList(newTodoList.Name);
         
-        if(newTodoList.Items is not null)
-            foreach (var item in newTodoList.Items) todoList.TodoItems.Add(new TodoItem(item.Value, item.IsCompleted));
+        if(newTodoList.TodoItems is not null)
+            foreach (var item in newTodoList.TodoItems) todoList.TodoItems.Add(new TodoItem(item.Value, item.IsCompleted));
 
         user.TodoLists.Add(todoList);
 
@@ -113,7 +126,7 @@ public static class TodosEndpoint
         return TypedResults.Created($"/api/todos/{todoList.Id}", todoList);
     }
 
-    private static async Task<Results<Ok, NotFound, BadRequest, BadRequest<string>>> UpdateTodoList(int id,
+    private static async Task<Results<Ok<TodoList>, NotFound, BadRequest, BadRequest<string>>> UpdateTodoList(int id,
         UpdateTodoListDto updateTodoList, IValidator<UpdateTodoListDto> validator, HttpContext httpContext, TadaTodoContext context)
     {
         var validation = await validator.ValidateAsync(updateTodoList);
@@ -155,25 +168,6 @@ public static class TodosEndpoint
         
         await context.SaveChangesAsync();
 
-        return TypedResults.Ok();
-    }
-    
-    private static async Task<Results<Ok<List<TodoList>>, NotFound, BadRequest>> FindTodoLists(string search, HttpContext httpContext,
-        TadaTodoContext context)
-    {
-        var userId = httpContext.User.GetUserId();
-        var userQuery = context.Users
-            .AsNoTracking()
-            .Include(u => u.TodoLists)
-            .ThenInclude(tl => tl.TodoItems.Where(ti => EF.Functions.Like(ti.Value, $"%{search}%")))
-            .Where(u => u.Id == userId);
-        
-        var user = await userQuery.FirstOrDefaultAsync();
-
-        if (user is null) return TypedResults.BadRequest();
-
-        var foundLists = user.TodoLists.Where(tl => tl.TodoItems.Count > 0).ToList();
-        
-        return TypedResults.Ok(foundLists);
+        return TypedResults.Ok(todoList);
     }
 }

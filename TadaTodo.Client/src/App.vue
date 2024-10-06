@@ -57,6 +57,6 @@ async function logout() {
   startLoading();
   await userStore.logout();
   stopLoading();
-  await router.push('/');
+  router.push('/');
 }
 </script>

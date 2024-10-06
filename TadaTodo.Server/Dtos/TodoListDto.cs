@@ -1,3 +1,3 @@
 namespace TadaTodo.Server.Dtos;
 
-public record TodoListDto(string Name);
+public record TodoListDto(int Id, string Name);

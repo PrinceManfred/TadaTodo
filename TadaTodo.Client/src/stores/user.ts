@@ -1,8 +1,13 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import type { User } from '@/models';
 
+export interface UserStoreState {
+  id: number;
+  username: string | null;
+}
 export const useUserStore = defineStore('user', {
-  state: () => ({
+  state: (): UserStoreState => ({
     id: 0,
     username: null
   }),
@@ -14,7 +19,7 @@ export const useUserStore = defineStore('user', {
   actions: {
     async login(username: string, password: string) {
       try {
-        const res = await axios.post('/api/users/login', {
+        const res = await axios.post<User>('/api/users/login', {
           username,
           password
         });
@@ -27,7 +32,7 @@ export const useUserStore = defineStore('user', {
     },
     async register(username: string, password: string) {
       try {
-        const res = await axios.post('/api/users', {
+        const res = await axios.post<User>('/api/users', {
           username,
           password
         });
@@ -40,7 +45,7 @@ export const useUserStore = defineStore('user', {
     },
     async checkLoginStatus() {
       try {
-        const res = await axios.get('/api/users/me');
+        const res = await axios.get<User>('/api/users/me');
         this.id = res.data.id;
         this.username = res.data.username;
         return true;

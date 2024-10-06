@@ -4,6 +4,7 @@ import LoginPage from '@/pages/LoginPage.vue';
 import { useUserStore } from '@/stores/user';
 import RegistrationPage from '@/pages/RegistrationPage.vue';
 import NotFoundPage from '@/pages/NotFoundPage.vue';
+import TodosPage from '@/pages/TodosPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,14 @@ const router = createRouter({
       component: RegistrationPage,
       beforeEnter: () => {
         if (useUserStore().isLoggedIn) return { path: '/' };
+      }
+    },
+    {
+      path: '/todos',
+      name: 'todos',
+      component: TodosPage,
+      beforeEnter: () => {
+        if (!useUserStore().isLoggedIn) return { path: '/login' };
       }
     },
     {

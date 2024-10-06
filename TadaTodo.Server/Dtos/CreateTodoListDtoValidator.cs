@@ -10,6 +10,6 @@ public class CreateTodoListDtoValidator : AbstractValidator<CreateTodoListDto>
             .NotEmpty().WithMessage("Name is required.")
             .MaximumLength(255).WithMessage("Name must be 255 characters or less.");
 
-        RuleForEach(x => x.Items).SetValidator(itemValidator);
+        RuleForEach(x => x.TodoItems).SetValidator(itemValidator);
     }
 }
