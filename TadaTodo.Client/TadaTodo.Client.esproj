@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.Javascript.Sdk/1.0.1635611">
+<Project Sdk="Microsoft.VisualStudio.Javascript.Sdk/1.0.1751888">
     <PropertyGroup>
         <ShouldRunBuildScript>false</ShouldRunBuildScript>
         <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
