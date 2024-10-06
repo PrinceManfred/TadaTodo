@@ -50,7 +50,7 @@ const router = createRouter({
       beforeEnter: () => {
         if (!useUserStore().isLoggedIn) return { path: '/login' };
       },
-      props: (route) => ({ search: route.query.search ?? '' })
+      props: (route) => ({ search: route.query.q ?? '' })
     },
     {
       path: '/:catchAll(.*)',

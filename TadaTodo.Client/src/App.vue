@@ -87,6 +87,6 @@ async function logout() {
 }
 
 async function performSearch() {
-  router.push({ path: '/search', query: { search: searchQuery.value } });
+  router.push({ path: '/search', query: { q: searchQuery.value } });
 }
 </script>
