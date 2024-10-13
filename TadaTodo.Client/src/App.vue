@@ -63,21 +63,32 @@
     <v-overlay :model-value="isLoading" persistent class="align-center justify-center">
       <v-progress-circular color="primary" size="128" indeterminate></v-progress-circular>
     </v-overlay>
+    <v-snackbar v-model="snackbar" :timeout="snackbarTimeout" :color="snackbarColor">
+      {{ snackbarText }}
+      <template v-slot:actions>
+        <v-btn variant="text" @click="snackbar = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script lang="ts" setup>
-import { inject, ref } from 'vue';
+import { ref, provide } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
-import { type LoadingState, LoadingSymbol } from '@/plugins/loading';
 import { useDisplay } from 'vuetify';
+import { useLoading } from '@/composables';
+import { SnackbarSymbol } from '@/symbols';
 
-const { isLoading, startLoading, stopLoading } = inject(LoadingSymbol) as LoadingState;
+const { isLoading, startLoading, stopLoading } = useLoading();
 const router = useRouter();
 const userStore = useUserStore();
 const display = useDisplay();
 const searchQuery = ref('');
+const snackbar = ref(false);
+const snackbarTimeout = ref(2000);
+const snackbarText = ref('');
+const snackbarColor = ref('primary');
 
 async function logout() {
   startLoading();
@@ -89,4 +100,13 @@ async function logout() {
 async function performSearch() {
   router.push({ path: '/search', query: { q: searchQuery.value } });
 }
+
+function showSnackbar(text: string, timeout = 2000, color = 'primary') {
+  snackbarText.value = text;
+  snackbarTimeout.value = timeout;
+  snackbar.value = true;
+  snackbarColor.value = color;
+}
+
+provide(SnackbarSymbol, showSnackbar);
 </script>

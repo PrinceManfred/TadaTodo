@@ -1,5 +1,6 @@
 import { computed, ref, inject } from 'vue';
 import { type LoadingState, LoadingSymbol } from '@/plugins/loading';
+import { SnackbarSymbol } from '@/symbols';
 export function useShake() {
   const isActive = ref(false);
   const shakeClass = computed(() => ({
@@ -20,4 +21,13 @@ export function useShake() {
 
 export function useLoading() {
   return inject(LoadingSymbol) as LoadingState;
+}
+
+export function useSnackbar() {
+  const showSnackbar = inject(SnackbarSymbol) as (
+    text: string,
+    timeout?: number,
+    color?: string
+  ) => void;
+  return { showSnackbar };
 }

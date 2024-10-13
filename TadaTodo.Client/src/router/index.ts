@@ -54,7 +54,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/todos/:todoListId',
+      path: '/todos/:todoListId(\\d+)',
       name: 'editTodoList',
       component: EditTodoListPage,
       beforeEnter: () => {
@@ -72,7 +72,7 @@ const router = createRouter({
       props: (route) => ({ search: route.query.q ?? '' })
     },
     {
-      path: '/:catchAll(.*)',
+      path: '/:catchAll(.*)*',
       name: 'notFound',
       component: NotFoundPage
     }

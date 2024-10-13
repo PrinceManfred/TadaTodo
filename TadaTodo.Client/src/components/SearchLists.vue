@@ -6,7 +6,7 @@
   </v-row>
   <v-row v-else>
     <v-col v-for="todo in todoLists" :key="todo.id" cols="12">
-      <v-btn :text="todo.name" block color="primary" />
+      <v-btn :text="todo.name" block color="primary" @click="router.push(`/todos/${todo.id}`)" />
     </v-col>
   </v-row>
 </template>
@@ -17,6 +17,7 @@ import { ref, onMounted, defineProps } from 'vue';
 import type { TodoList } from '@/models';
 import { watch } from 'vue';
 import { useLoading } from '@/composables';
+import { useRouter } from 'vue-router';
 
 const { startLoading, stopLoading } = useLoading();
 const props = defineProps<{
@@ -24,6 +25,7 @@ const props = defineProps<{
 }>();
 
 const todosService = new TodoService();
+const router = useRouter();
 const todoLists = ref<TodoList[]>([]);
 
 watch(

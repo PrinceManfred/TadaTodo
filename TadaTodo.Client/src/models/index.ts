@@ -16,7 +16,7 @@ export interface CreateTodoItem {
 
 export interface CreateTodoList {
   name: string;
-  items: CreateTodoItem[];
+  todoItems: CreateTodoItem[];
 }
 
 export interface UpdateTodoItem {
@@ -30,7 +30,7 @@ export interface UpdateTodoList {
   name?: string | null;
   newItems?: CreateTodoItem[] | null;
   updatedItems?: UpdateTodoItem[] | null;
-  deleteItems?: number[] | null;
+  deletedItems?: number[] | null;
 }
 
 export interface User {
