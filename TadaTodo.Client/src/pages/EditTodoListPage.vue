@@ -3,6 +3,9 @@
     <v-container>
       <v-row>
         <v-col cols="12">
+          <router-link to="" @click="router.back()">< Back</router-link>
+        </v-col>
+        <v-col cols="12">
           <h1>Edit Todo List</h1>
         </v-col>
         <v-col cols="12">

@@ -14,6 +14,9 @@
         />
       </template>
 
+      <router-link to="/" style="height: 100%">
+        <img height="100%" src="@/assets/logo.jpg" alt="Tada Todo Logo" class="pl-1 py-1 logo" />
+      </router-link>
       <v-app-bar-title
         @click="router.push('/')"
         text="TadaTodo"
@@ -110,3 +113,9 @@ function showSnackbar(text: string, timeout = 2000, color = 'primary') {
 
 provide(SnackbarSymbol, showSnackbar);
 </script>
+
+<style>
+.logo {
+  border-radius: 15px;
+}
+</style>

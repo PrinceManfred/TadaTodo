@@ -3,10 +3,13 @@
     <v-container>
       <v-row>
         <v-col cols="12">
+          <router-link to="" @click="router.back()">< Back</router-link>
+        </v-col>
+        <v-col cols="12">
           <h1>Create New List</h1>
         </v-col>
         <v-col cols="12">
-          <EditTodoList v-model="todoList" @save="onSave" />
+          <EditTodoList v-model="todoList" @save="onSave" @cancel="router.push('/todos')" />
         </v-col>
       </v-row>
     </v-container>

@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="12">
           <h1>Search Results</h1>
-          <p class="text-subtitle-1">Results for "{{ search }}"</p>
+          <p class="text-subtitle-1">Todo lists with an item containing "{{ search }}"</p>
         </v-col>
         <v-col cols="12">
           <SearchLists :search="search" />
