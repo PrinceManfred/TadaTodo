@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <router-link to="" @click="router.back()">< Back</router-link>
+          <router-link to="/todos">&lt; Back</router-link>
         </v-col>
         <v-col cols="12">
           <h1>Create New List</h1>

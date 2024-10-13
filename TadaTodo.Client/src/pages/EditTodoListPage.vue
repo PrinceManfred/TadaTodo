@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <router-link to="" @click="router.back()">&lt; Back</router-link>
+          <router-link to="/todos">&lt; All Lists</router-link>
         </v-col>
         <v-col cols="12">
           <h1>Edit Todo List</h1>
