@@ -50,6 +50,10 @@
                     :rules="[matchPasswords, minimumLength(6)]"
                     class="my-2"
                   />
+                  <p class="my-2">
+                    We don't collect any contact information. That means that if you lose your
+                    password it's lost forever. Please make sure to securely store your password.
+                  </p>
                   <v-btn
                     type="submit"
                     prepend-icon="mdi-login"
