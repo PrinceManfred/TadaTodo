@@ -17,16 +17,16 @@
 import EditTodoList from '@/components/EditTodoList.vue';
 import type { TodoList } from '@/models';
 import { onMounted } from 'vue';
-import { ref, inject } from 'vue';
+import { ref } from 'vue';
 import { TodoService } from '@/services/todoService';
-import { type LoadingState, LoadingSymbol } from '@/plugins/loading';
+import { useLoading } from '@/composables';
 
 const props = defineProps<{
   todoListId: number;
 }>();
 
 const todosService = new TodoService();
-const { startLoading, stopLoading } = inject(LoadingSymbol) as LoadingState;
+const { startLoading, stopLoading } = useLoading();
 let todoList = ref<TodoList>({
   id: 0,
   name: '',
@@ -41,8 +41,11 @@ let todoList = ref<TodoList>({
 
 async function getTodoList() {
   startLoading();
-  todoList.value = await todosService.getTodoList(props.todoListId);
-  stopLoading();
+  try {
+    todoList.value = await todosService.getTodoList(props.todoListId);
+  } finally {
+    stopLoading();
+  }
 }
 
 onMounted(async () => {

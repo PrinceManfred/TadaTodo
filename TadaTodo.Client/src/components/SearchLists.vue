@@ -16,7 +16,9 @@ import { TodoService } from '@/services/todoService';
 import { ref, onMounted, defineProps } from 'vue';
 import type { TodoList } from '@/models';
 import { watch } from 'vue';
+import { useLoading } from '@/composables';
 
+const { startLoading, stopLoading } = useLoading();
 const props = defineProps<{
   search: string;
 }>();
@@ -31,10 +33,15 @@ watch(
   }
 );
 async function getResults() {
-  if (!props.search || props.search.trim() == '') {
-    todoLists.value = await todosService.getTodoLists();
-  } else {
-    todoLists.value = await todosService.searchTodoLists(props.search);
+  startLoading();
+  try {
+    if (!props.search || props.search.trim() == '') {
+      todoLists.value = await todosService.getTodoLists();
+    } else {
+      todoLists.value = await todosService.searchTodoLists(props.search);
+    }
+  } finally {
+    stopLoading();
   }
 }
 

@@ -1,4 +1,5 @@
-import { computed, ref } from 'vue';
+import { computed, ref, inject } from 'vue';
+import { type LoadingState, LoadingSymbol } from '@/plugins/loading';
 export function useShake() {
   const isActive = ref(false);
   const shakeClass = computed(() => ({
@@ -15,4 +16,8 @@ export function useShake() {
   };
 
   return { shakeClass, shake };
+}
+
+export function useLoading() {
+  return inject(LoadingSymbol) as LoadingState;
 }

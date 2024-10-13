@@ -58,13 +58,12 @@
 </template>
 
 <script setup lang="ts">
-import { inject, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router';
-import { type LoadingState, LoadingSymbol } from '@/plugins/loading';
-import { useShake } from '@/composables';
+import { useLoading, useShake } from '@/composables';
 
-const { startLoading, stopLoading } = inject(LoadingSymbol) as LoadingState;
+const { startLoading, stopLoading } = useLoading();
 const router = useRouter();
 const userStore = useUserStore();
 const username = ref('');
