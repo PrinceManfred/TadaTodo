@@ -8,6 +8,7 @@ import TodosPage from '@/pages/TodosPage.vue';
 import CreateTodoListPage from '@/pages/CreateTodoListPage.vue';
 import EditTodoListPage from '@/pages/EditTodoListPage.vue';
 import SearchPage from '@/pages/SearchPage.vue';
+import StatsPage from '@/pages/StatsPage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -70,6 +71,14 @@ const router = createRouter({
         if (!useUserStore().isLoggedIn) return { path: '/login' };
       },
       props: (route) => ({ search: route.query.q ?? '' })
+    },
+    {
+      path: '/stats',
+      name: 'stats',
+      component: StatsPage,
+      beforeEnter: () => {
+        if (!useUserStore().isLoggedIn) return { path: '/login' };
+      }
     },
     {
       path: '/:catchAll(.*)*',

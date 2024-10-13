@@ -51,7 +51,7 @@ async function onSave() {
   try {
     const createdList = await todosService.createTodoList(newList);
     showSnackbar('Save successful!', 3000, 'success');
-    router.push(`/todos/${createdList.id}`);
+    router.replace(`/todos/${createdList.id}`);
   } catch {
     showSnackbar('Save failed!', 3000, 'error');
   } finally {

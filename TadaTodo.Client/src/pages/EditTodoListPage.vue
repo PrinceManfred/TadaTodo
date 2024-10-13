@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <router-link to="" @click="router.back()">< Back</router-link>
+          <router-link to="" @click="router.back()">&lt; Back</router-link>
         </v-col>
         <v-col cols="12">
           <h1>Edit Todo List</h1>
@@ -126,6 +126,7 @@ async function deleteList() {
   loading.startLoading();
   try {
     await todosService.deleteTodoList(todoList.value.id);
+    showSnackbar('List deleted!', 3000, 'success');
     router.push('/todos');
   } finally {
     loading.stopLoading();
