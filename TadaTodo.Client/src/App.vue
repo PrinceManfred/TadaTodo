@@ -52,7 +52,7 @@
         </template>
         <v-list>
           <v-list-item>
-            <v-btn block variant="text" @click.stop>Account Details</v-btn>
+            <v-btn block variant="text" @click.stop>Stats</v-btn>
           </v-list-item>
           <v-list-item>
             <v-btn block variant="text" @click="logout">Logout</v-btn>
