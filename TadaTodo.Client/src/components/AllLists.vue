@@ -11,17 +11,20 @@ import { TodoService } from '@/services/todoService';
 import { ref, reactive, onMounted } from 'vue';
 import type { TodoList } from '@/models';
 import { useRouter } from 'vue-router';
-import { useLoading } from '@/composables';
+import { useLoading, useSnackbar } from '@/composables';
 
 const loading = reactive(useLoading());
 const todosService = new TodoService();
 const todoLists = ref<TodoList[]>([]);
 const router = useRouter();
+const { showSnackbar } = useSnackbar();
 
 onMounted(async () => {
   loading.startLoading();
   try {
     todoLists.value = await todosService.getTodoLists();
+  } catch {
+    showSnackbar('Failed to load lists. Try again later.', 4000, 'error');
   } finally {
     loading.stopLoading();
   }

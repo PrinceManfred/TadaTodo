@@ -16,7 +16,7 @@ import { TodoService } from '@/services/todoService';
 import { ref, onMounted, defineProps } from 'vue';
 import type { TodoList } from '@/models';
 import { watch } from 'vue';
-import { useLoading } from '@/composables';
+import { useLoading, useSnackbar } from '@/composables';
 import { useRouter } from 'vue-router';
 
 const { startLoading, stopLoading } = useLoading();
@@ -26,6 +26,7 @@ const props = defineProps<{
 
 const todosService = new TodoService();
 const router = useRouter();
+const { showSnackbar } = useSnackbar();
 const todoLists = ref<TodoList[]>([]);
 
 watch(
@@ -42,6 +43,8 @@ async function getResults() {
     } else {
       todoLists.value = await todosService.searchTodoLists(props.search);
     }
+  } catch {
+    showSnackbar('Search unavailable. Try again later.', 4000, 'error');
   } finally {
     stopLoading();
   }
