@@ -6,7 +6,12 @@
           <h1>My Todo Lists</h1>
         </v-col>
         <v-col cols="12">
-          <v-btn color="secondary" text="New List" prepend-icon="mdi-plus" />
+          <v-btn
+            color="secondary"
+            text="New List"
+            prepend-icon="mdi-plus"
+            @click="router.push({ name: 'createTodoList' })"
+          />
         </v-col>
         <v-col cols="12">
           <AllLists />
@@ -18,4 +23,7 @@
 
 <script setup lang="ts">
 import AllLists from '@/components/AllLists.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 </script>

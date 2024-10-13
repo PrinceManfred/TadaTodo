@@ -16,7 +16,6 @@
 
 <script setup lang="ts">
 import SearchLists from '@/components/SearchLists.vue';
-import { defineProps, withDefaults } from 'vue';
 
 const props = withDefaults(
   defineProps<{

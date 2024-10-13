@@ -5,6 +5,8 @@ import { useUserStore } from '@/stores/user';
 import RegistrationPage from '@/pages/RegistrationPage.vue';
 import NotFoundPage from '@/pages/NotFoundPage.vue';
 import TodosPage from '@/pages/TodosPage.vue';
+import CreateTodoListPage from '@/pages/CreateTodoListPage.vue';
+import EditTodoListPage from '@/pages/EditTodoListPage.vue';
 import SearchPage from '@/pages/SearchPage.vue';
 
 const router = createRouter({
@@ -42,6 +44,23 @@ const router = createRouter({
       beforeEnter: () => {
         if (!useUserStore().isLoggedIn) return { path: '/login' };
       }
+    },
+    {
+      path: '/todos/create',
+      name: 'createTodoList',
+      component: CreateTodoListPage,
+      beforeEnter: () => {
+        if (!useUserStore().isLoggedIn) return { path: '/login' };
+      }
+    },
+    {
+      path: '/todos/:todoListId',
+      name: 'editTodoList',
+      component: EditTodoListPage,
+      beforeEnter: () => {
+        if (!useUserStore().isLoggedIn) return { path: '/login' };
+      },
+      props: (route) => ({ todoListId: Number(route.params.todoListId) })
     },
     {
       path: '/search',
