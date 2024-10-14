@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { TodoService } from '@/services/todoService';
-import { ref, onMounted, defineProps } from 'vue';
+import { ref, onMounted } from 'vue';
 import type { TodoList } from '@/models';
 import { watch } from 'vue';
 import { useLoading, useSnackbar } from '@/composables';

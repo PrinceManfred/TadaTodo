@@ -7,7 +7,7 @@
           prepend-icon="mdi-login"
           class="py-4"
           rel="noopener noreferrer"
-          title="Login"
+          title="Registration"
         >
           <v-card-text>
             <v-row>
@@ -61,7 +61,7 @@
                     variant="flat"
                     color="primary"
                     rounded
-                    >Login</v-btn
+                    >Register</v-btn
                   >
                 </v-form>
               </v-col>

@@ -43,11 +43,17 @@ public static class UsersEndpoints
         if (existingUser is not null) return TypedResults.Conflict("Username already taken.");
         
         var user = new User(userLogin.Username, userLogin.Password);
+        var todoList = new TodoList("Welcome to Tada Todo!");
+        todoList.TodoItems.Add(new TodoItem("Check the box on the left to mark items \"Complete\"", false));
+        todoList.TodoItems.Add(new TodoItem("Click the \"Save\" button on the bottom right to save your changes.", false));
+        todoList.TodoItems.Add(new TodoItem("Have fun!", false));
+        user.TodoLists.Add(todoList);
         context.Add(user);
         await context.SaveChangesAsync();
         
         await LoginUser(user, httpContext);
         
+        await context.SaveChangesAsync();
         return TypedResults.Created("api/users/me", new UserDto(user.Id, user.Username));
     }
     
