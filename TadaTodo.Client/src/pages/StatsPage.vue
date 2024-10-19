@@ -4,30 +4,43 @@
       <v-row>
         <v-col cols="12">
           <h1>Stats</h1>
+          <p class="text-subtitle-1">
+            {{
+              new Date().toLocaleDateString('en-US', {
+                month: 'numeric',
+                day: 'numeric',
+                year: 'numeric'
+              })
+            }}
+          </p>
         </v-col>
-        <v-col cols="12" sm="6">
-          <v-card>
-            <v-card-title>Total # Todo Lists</v-card-title>
-            <v-card-text>{{ totalLists }}</v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-card>
-            <v-card-title>Total # Todo Items</v-card-title>
-            <v-card-text>{{ totalItems }}</v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-card>
-            <v-card-title># Completed Todo Items</v-card-title>
-            <v-card-text>{{ completedItems }}</v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-card>
-            <v-card-title># Incomplete Todo Items</v-card-title>
-            <v-card-text>{{ incompleteItems }}</v-card-text>
-          </v-card>
+        <v-col cols="12">
+          <v-table class="first-column-fit-content">
+            <thead>
+              <tr>
+                <th class="text-left">Category</th>
+                <th class="text-left">Number of Items</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Todo Lists</td>
+                <td>{{ totalLists }}</td>
+              </tr>
+              <tr>
+                <td>All Todo Items</td>
+                <td>{{ totalItems }}</td>
+              </tr>
+              <tr>
+                <td>Completed Todo Items</td>
+                <td>{{ completedItems }}</td>
+              </tr>
+              <tr>
+                <td>Incomplete Todo Items</td>
+                <td>{{ incompleteItems }}</td>
+              </tr>
+            </tbody>
+          </v-table>
         </v-col>
       </v-row>
     </v-container>
@@ -65,3 +78,11 @@ onMounted(async () => {
   }
 });
 </script>
+
+<style>
+.first-column-fit-content td:nth-child(1),
+.first-column-fit-content th:nth-child(1) {
+  white-space: nowrap;
+  width: 1%;
+}
+</style>
