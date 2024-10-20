@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TadaTodo.Server", "TadaTodo
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "TadaTodo.Client", "TadaTodo.Client\TadaTodo.Client.esproj", "{B7473777-2B33-453E-9E26-B330EA470846}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TadaTodo.Server.Tests", "TadaTodo.Server.Tests\TadaTodo.Server.Tests.csproj", "{21BDF21E-EF1E-4300-80E8-871FEA7180E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{B7473777-2B33-453E-9E26-B330EA470846}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7473777-2B33-453E-9E26-B330EA470846}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7473777-2B33-453E-9E26-B330EA470846}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{21BDF21E-EF1E-4300-80E8-871FEA7180E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21BDF21E-EF1E-4300-80E8-871FEA7180E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21BDF21E-EF1E-4300-80E8-871FEA7180E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21BDF21E-EF1E-4300-80E8-871FEA7180E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
