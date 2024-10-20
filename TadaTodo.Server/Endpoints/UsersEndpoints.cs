@@ -46,6 +46,7 @@ public static class UsersEndpoints
         var todoList = new TodoList("Welcome to Tada Todo!");
         todoList.TodoItems.Add(new TodoItem("Check the box on the left to mark items \"Complete\"", false));
         todoList.TodoItems.Add(new TodoItem("Click the \"Save\" button on the bottom right to save your changes.", false));
+        todoList.TodoItems.Add(new TodoItem("Click your username in the top right of the site and check out your stats.", false));
         todoList.TodoItems.Add(new TodoItem("Have fun!", false));
         user.TodoLists.Add(todoList);
         context.Add(user);
