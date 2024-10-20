@@ -9,7 +9,8 @@ To run Tada Todo! locally you'll need `Node.js`, `Visual Studio 2022`, and an in
 `Node.js` can be downloaded at [https://nodejs.org/](https://nodejs.org/).
 
 `Visual Studio` can be downloaded at [https://visualstudio.microsoft.com/vs/community/](https://visualstudio.microsoft.com/vs/community/).
-It comes bundled with SQL Server Express.
+Check the `ASP.NET and web development` workload during installation. This will ensure that SQL Server Express and
+other dependencies are available.
 
 ### Run Locally
 1. Open `TadaTodo.sln` in `Visual Studio`.
