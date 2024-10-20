@@ -19,7 +19,7 @@
       </router-link>
       <v-app-bar-title
         @click="router.push('/')"
-        text="TadaTodo"
+        text="Tada Todo!"
         class="flex-0-0"
         style="cursor: pointer"
       />
