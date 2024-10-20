@@ -10,7 +10,7 @@ public static class UserHelpers
         if (idClaim is null) return 0;
         return !int.TryParse(idClaim, out var id) ? 0 : id;
     }
-    
+
     public static string? GetUserName(this ClaimsPrincipal user)
     {
         return user.Identity?.Name;

@@ -12,14 +12,14 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.ExpireTimeSpan = TimeSpan.FromDays(7);
         options.SlidingExpiration = true;
-        
+
         // Override redirects since we are handling authentication in API endpoints
         options.Events.OnRedirectToLogin = context =>
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return Task.CompletedTask;
         };
-        
+
         options.Events.OnRedirectToAccessDenied = context =>
         {
             context.Response.StatusCode = StatusCodes.Status403Forbidden;
@@ -47,7 +47,7 @@ builder.Services.Configure<StaticFileOptions>(options =>
     options.OnPrepareResponse = responseContext =>
     {
         if (responseContext.File.Name != "index.html") return;
-        
+
         responseContext.Context.Response.Headers.CacheControl = "no-store";
         responseContext.Context.Response.Headers.Expires = "0";
     };

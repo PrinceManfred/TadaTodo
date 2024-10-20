@@ -9,7 +9,8 @@ public class UserLoginDtoValidator : AbstractValidator<UserLoginDto>
         RuleFor(user => user.Username)
             .NotEmpty().WithMessage("Username is required")
             .Length(3, 50).WithMessage("Username must be between 3 and 50 characters")
-            .Matches(@"^[a-zA-Z0-9_-]+$").WithMessage("Username can only contain alphanumeric characters, underscores, and hyphens");
+            .Matches(@"^[a-zA-Z0-9_-]+$")
+            .WithMessage("Username can only contain alphanumeric characters, underscores, and hyphens");
 
         RuleFor(user => user.Password)
             .NotEmpty().WithMessage("Password is required")

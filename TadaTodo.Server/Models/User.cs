@@ -25,7 +25,7 @@ public class User
     public string Username { get; private set; }
     public string Password { get; private set; }
 
-    public List<TodoList> TodoLists { get; private set; }= [];
+    public List<TodoList> TodoLists { get; private set; } = [];
 
     public void UpdatePassword(string password)
     {
