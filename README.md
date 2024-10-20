@@ -20,3 +20,6 @@ other dependencies are available.
 3. Run the `http` run configuration for the `TadaTodo.Server` project in Debug mode. Running in Debug mode will make the
    application apply all database migrations automatically at runtime. The first time you run the application it will
    install the dependencies for the `TadaTodo.Client` project. This can take a some time so please be patient.
+4. If a browser window doesn't automatically redirect to the correct page navigate to
+   [http://localhost:3000/](http://localhost:3000/) to view the site.
+5. Register a user through the web interface. There are no users in the database by default.
