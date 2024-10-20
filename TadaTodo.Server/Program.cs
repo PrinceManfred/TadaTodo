@@ -55,6 +55,15 @@ builder.Services.Configure<StaticFileOptions>(options =>
 
 var app = builder.Build();
 
+#if DEBUG
+// Apply migrations to the database automatically during development
+using (var serviceScope = app.Services.CreateScope())
+{
+    var dbContext = serviceScope.ServiceProvider.GetRequiredService<TadaTodoContext>();
+    dbContext.Database.Migrate();
+}
+#endif
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
