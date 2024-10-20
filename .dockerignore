@@ -1,4 +1,4 @@
-﻿**/.classpath
+**/.classpath
 **/.dockerignore
 **/.env
 **/.git
@@ -29,3 +29,4 @@ README.md
 !.git/config
 !.git/packed-refs
 !.git/refs/heads/**
+TadaTodo.Server.Tests/
