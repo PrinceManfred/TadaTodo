@@ -14,7 +14,8 @@ public class UpdateTodoListDtoValidator : AbstractValidator<UpdateTodoListDto>
 
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name cannot be empty")
-            .When(x => x.Name is not null);
+            .When(x => x.Name is not null)
+            .MaximumLength(255).WithMessage("Name must be 255 characters or less.");
 
         RuleForEach(x => x.NewItems).SetValidator(createTodoItemDtoValidator);
 

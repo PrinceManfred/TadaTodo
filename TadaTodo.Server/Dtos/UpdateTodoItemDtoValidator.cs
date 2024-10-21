@@ -10,7 +10,7 @@ public class UpdateTodoItemDtoValidator : AbstractValidator<UpdateTodoItemDto>
             .WithMessage("Id must be greater than 0.");
 
         RuleFor(x => x.Value)
-            .NotNull()
+            .NotNull().WithMessage("Value cannot be null.")
             .MaximumLength(500)
             .WithMessage("Value must be 500 characters or less.");
     }
