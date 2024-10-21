@@ -44,6 +44,26 @@ public class UpdateTodoListDtoValidatorTest
         var result = _validator.TestValidate(list);
         result.ShouldHaveValidationErrorFor(x => x.Name);
     }
+    
+    [Fact]
+    public void Should_have_error_when_Name_is_over_255_characters_long()
+    {
+        var name = new string('x', 256);
+        var list = new UpdateTodoListDto(1, name, null, null, null);
+
+        var result = _validator.TestValidate(list);
+        result.ShouldHaveValidationErrorFor(todoList => todoList.Name);
+    }
+
+    [Fact]
+    public void Should_not_error_when_Name_is_255_characters_long()
+    {
+        var name = new string('x', 255);
+        var list = new UpdateTodoListDto(1, name, null, null, null);
+
+        var result = _validator.TestValidate(list);
+        result.ShouldNotHaveValidationErrorFor(todoList => todoList.Name);
+    }
 
     [Fact]
     public void Should_not_have_error_when_Name_is_not_empty()
@@ -53,4 +73,5 @@ public class UpdateTodoListDtoValidatorTest
         var result = _validator.TestValidate(list);
         result.ShouldNotHaveValidationErrorFor(x => x.Name);
     }
+    
 }
