@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TadaTodo.Server.Data;
 
@@ -10,9 +11,11 @@ using TadaTodo.Server.Data;
 namespace TadaTodo.Server.Migrations
 {
     [DbContext(typeof(TadaTodoContext))]
-    partial class TadaTodoContextModelSnapshot : ModelSnapshot
+    [Migration("20241021024712_AddStringLengths")]
+    partial class AddStringLengths
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

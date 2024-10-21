@@ -28,6 +28,12 @@ public class TadaTodoContext : DbContext, IDataProtectionKeyContext
             builder.HasMany(u => u.TodoLists)
                 .WithOne()
                 .IsRequired();
+            
+            builder.Property(u => u.Username)
+                .HasMaxLength(50);
+            
+            builder.Property(u => u.Password)
+                .HasMaxLength(1024);
         });
 
         modelBuilder.Entity<TodoList>(builder =>
@@ -38,6 +44,12 @@ public class TadaTodoContext : DbContext, IDataProtectionKeyContext
 
             builder.Property(tl => tl.Name)
                 .HasMaxLength(255);
+        });
+        
+        modelBuilder.Entity<TodoItem>(builder =>
+        {
+            builder.Property(tl => tl.Value)
+                .HasMaxLength(500);
         });
     }
 }
