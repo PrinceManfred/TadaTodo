@@ -33,7 +33,7 @@
                     persistent-counter
                     @input="passwordOneChanged"
                     @click:append-inner="showPassword = !showPassword"
-                    :rules="[minimumLength(6)]"
+                    :rules="[lengthBetween(6, 50)]"
                     class="my-2"
                   />
                   <v-text-field
@@ -47,7 +47,7 @@
                     counter
                     persistent-counter
                     @click:append-inner="showPassword = !showPassword"
-                    :rules="[matchPasswords, minimumLength(6)]"
+                    :rules="[matchPasswords, lengthBetween(6, 50)]"
                     class="my-2"
                   />
                   <p class="my-2">
