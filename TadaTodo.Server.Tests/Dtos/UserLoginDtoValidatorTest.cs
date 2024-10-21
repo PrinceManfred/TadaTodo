@@ -92,6 +92,16 @@ public class UserLoginDtoValidatorTest
         var result = _validator.TestValidate(user);
         result.ShouldHaveValidationErrorFor(x => x.Password);
     }
+    
+    [Fact]
+    public void Should_have_error_when_Password_is_greater_than_50_characters()
+    {
+        var password = new string('x', 51);
+        var user = new UserLoginDto("testUsername", password);
+
+        var result = _validator.TestValidate(user);
+        result.ShouldHaveValidationErrorFor(x => x.Password);
+    }
 
     [Theory]
     [InlineData("123456")]
@@ -99,6 +109,16 @@ public class UserLoginDtoValidatorTest
     public void Should_not_have_error_when_Password_is_greater_than_or_equal_to_6_characters(string password)
     {
         var user = new UserLoginDto("testUsername123", password);
+
+        var result = _validator.TestValidate(user);
+        result.ShouldNotHaveValidationErrorFor(x => x.Password);
+    }
+    
+    [Fact]
+    public void Should_not_have_error_when_Password_is_equal_to_50_characters()
+    {
+        var password = new string('x', 50);
+        var user = new UserLoginDto("testUsername", password);
 
         var result = _validator.TestValidate(user);
         result.ShouldNotHaveValidationErrorFor(x => x.Password);
